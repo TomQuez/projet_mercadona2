@@ -49,8 +49,8 @@ class Promotion(models.Model):
     discount_percentage=models.PositiveIntegerField(validators=[validate_inferior_100],help_text="Enter a percentage for the promotion. it must be positive and under 100")
     
     def __str__(self):
-        """Function used to manipulate e promotion in the database"""
+        """Function used to manipulate a promotion in the database"""
         return self.discount_percentage
     
     def calculate_discounted_price(self):
-        pass
+        return Product.price-(Product.price*self.discount_percentage/100)
