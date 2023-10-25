@@ -12,7 +12,7 @@ def validate_inferior_100(value):
         raise ValidationError(_("%(value)s is not inferior to 100"),params={"value":value})
 
 # Create your models here.
-class Category (models.Model):
+class Categorie (models.Model):
     """This object represent a category for a product."""
     name=models.CharField(max_length=100,help_text="Enter a name for the category(e.g. sport)")
     
@@ -27,7 +27,7 @@ class Product(models.Model):
     price=models.DecimalField(max_digits=10,decimal_places=2, help_text="Enter a price for the product")
     description=models.TextField(max_length=1000,help_text="Enter a brief description of the product")
     image=models.ImageField()
-    category=models.ForeignKey(Category,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
+    category=models.ForeignKey(Categorie,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
     
     def __str__(self):
         """Function used to manipulate the objects Product in the database"""
@@ -50,7 +50,8 @@ class Promotion(models.Model):
     
     def __str__(self):
         """Function used to manipulate a promotion in the database"""
-        return self.discount_percentage
+        result_discount=str(self.discount_percentage)
+        return f'{self.product} : promotion de {result_discount} %'
     
     def calculate_discounted_price(self):
         return Product.price-(Product.price*self.discount_percentage/100)
