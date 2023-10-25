@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 import uuid
 import datetime
+import math
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -50,3 +51,6 @@ class Promotion(models.Model):
     def __str__(self):
         """Function used to manipulate e promotion in the database"""
         return self.discount_percentage
+    
+    def calculate_discounted_price(self):
+        pass
