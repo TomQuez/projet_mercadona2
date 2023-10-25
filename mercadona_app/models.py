@@ -36,9 +36,17 @@ class Product(models.Model):
         """This function is used to display the content of an object Product"""
         return reverse('product-detail',args=[str(self.id)])
     
+    def get_price(self):
+        """return the price of the product"""
+        return self.price
+    
 class Promotion(models.Model):
     id=id=models.UUIDField(primary_key=True,default=uuid.uuid4,help_text="Unique ID for this promotion")
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    start_date=models.DateField(default=timezone.now())
+    start_date=models.DateField()
     end_date=models.DateField()
     discount_percentage=models.PositiveIntegerField(validators=[validate_inferior_100],help_text="Enter a percentage for the promotion. it must be positive and under 100")
+    
+    def __str__(self):
+        """Function used to manipulate e promotion in the database"""
+        return self.discount_percentage
