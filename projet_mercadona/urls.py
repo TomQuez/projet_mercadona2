@@ -23,6 +23,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mercadona_app',include('mercadona_app.urls')),
+    path('mercadona_app/',include('mercadona_app.urls')),
     path('', RedirectView.as_view(url='/mercadona_app/',permanent=True)),
 ]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
