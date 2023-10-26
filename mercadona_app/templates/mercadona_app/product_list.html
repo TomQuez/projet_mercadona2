@@ -12,10 +12,13 @@
     <div class="container-fluid">
         <h1>Accueil</h1>
         <p>Bienvenue sur le site de catalogue de Mercadona</p>
+        
         {% if product_list %}
         <ul>
             {%for product in product_list %}
             <li>{{product.label}}</li>
+            <li>{{promotion.product.price}}</li>
+           
             {% endfor %}
         </ul>
         {% else %}

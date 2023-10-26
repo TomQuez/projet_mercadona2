@@ -39,20 +39,32 @@ class Product(models.Model):
     
     def get_price(self):
         """return the price of the product"""
+        
         return self.price
+    
     
 class Promotion(models.Model):
     id=id=models.UUIDField(primary_key=True,default=uuid.uuid4,help_text="Unique ID for this promotion")
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    
+    status=models.BooleanField(default=False)
     start_date=models.DateField()
     end_date=models.DateField()
     discount_percentage=models.PositiveIntegerField(validators=[validate_inferior_100],help_text="Enter a percentage for the promotion. it must be positive and under 100")
+    
+    
     
     def __str__(self):
         """Function used to manipulate a promotion in the database"""
         result_discount=str(self.discount_percentage)
         return f'{self.product} : promotion de {result_discount} %'
     
+    def change_status(self):
+        if self.start_date <= datetime.date.today() and self.end_date>=datetime.date.today():
+            self.status=True
+            return self.status
+    
     def calculate_discounted_price(self):
-        return self.product.price-(self.product.price*self.discount_percentage/100)
+        if datetime.date.today()>=self.start_date and datetime.date.today()<=self.end_date: 
+            self.product.price= self.product.price-(self.product.price*self.discount_percentage/100)
+            return self.product.price
+        
