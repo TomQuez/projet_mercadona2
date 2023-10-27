@@ -26,3 +26,7 @@ urlpatterns = [
     path('mercadona_app/',include('mercadona_app.urls')),
     path('', RedirectView.as_view(url='/mercadona_app/',permanent=True)),
 ]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    

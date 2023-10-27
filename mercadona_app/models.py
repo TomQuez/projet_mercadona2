@@ -26,7 +26,7 @@ class Product(models.Model):
     label=models.CharField(max_length=200,help_text="Enter a label for the product")
     price=models.DecimalField(max_digits=10,decimal_places=2, help_text="Enter a price for the product")
     description=models.TextField(max_length=1000,help_text="Enter a brief description of the product")
-    image=models.ImageField()
+    image=models.ImageField(upload_to="images/")
     category=models.ForeignKey(Categorie,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
     
     def __str__(self):

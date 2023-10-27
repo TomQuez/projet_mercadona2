@@ -3,3 +3,8 @@ h1 {
     border:solid 1px red;
     text-align: center;
 }
+
+span {
+    color: red;
+    font-weight: 900;
+}

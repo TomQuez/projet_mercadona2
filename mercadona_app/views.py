@@ -6,6 +6,9 @@ from django.views import generic
 def index(request):
     product_list=Product.objects.all()
     promotion_list=Promotion.objects.all()
+    
+
+    
     context={
         'product_list':product_list,
         'promotion_list':promotion_list,
