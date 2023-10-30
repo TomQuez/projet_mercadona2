@@ -7,12 +7,12 @@
         <form action="" method="get">
             <label for="category">filtre par catégorie : </label>
             <select name="category" id="category">
-                <option value="">All</option>
+                <option value="">Toutes les catégories</option>
                 {% for category in categories %}
                 <option value="{{category.name}}" {% if category.name == selected_category %} selected {% endif %}>{{category.name}}</option>
                 {% endfor %}
             </select>
-            <input type="submit" value="Filter">
+            <input type="submit" value="Filtrer">
         </form>
         <ul>
         {% for product in product_list %}

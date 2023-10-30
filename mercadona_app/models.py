@@ -29,6 +29,9 @@ class Product(models.Model):
     image=models.ImageField(upload_to="images/")
     category=models.ForeignKey(Categorie,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
     
+    class Meta :
+        ordering=['label']
+    
     def __str__(self):
         """Function used to manipulate the objects Product in the database"""
         return self.label
