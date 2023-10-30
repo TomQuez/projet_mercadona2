@@ -1,6 +1,10 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 h1 {
     color: red;
-    border:solid 1px red;
+    /* border:solid 1px red; */
     text-align: center;
 }
 

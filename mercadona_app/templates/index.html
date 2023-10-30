@@ -2,19 +2,19 @@
 
 {% block content %}
     
-        <h1>Accueil</h1>
+        <h1 class="display-4">Accueil</h1>
         <p>Bienvenue sur le site de catalogue de Mercadona</p>
-        <form action="" method="get">
-            <label for="category">filtre par catégorie : </label>
-            <select name="category" id="category">
+        <form action="" method="get" >
+            <label for="category" class="form-label">Veuillez selectionner une catégorie : </label>
+            <select name="category" id="category" class="form-control">
                 <option value="">Toutes les catégories</option>
                 {% for category in categories %}
                 <option value="{{category.name}}" {% if category.name == selected_category %} selected {% endif %}>{{category.name}}</option>
                 {% endfor %}
             </select>
-            <input type="submit" value="Filtrer">
+            <input type="submit" value="Filtrer" class="btn btn-primary mt-2 mb-2">
         </form>
-        <ul>
+        <ul >
         {% for product in product_list %}
             <li>{{product.label}}</li>
             <li>{{product.price}}</li>
@@ -37,7 +37,7 @@
         {% endfor %}
 
         </ul>
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation ">
         <ul class="pagination">
             {% if product_list.has_previous %}
            
