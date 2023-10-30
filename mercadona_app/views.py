@@ -1,21 +1,26 @@
 from django.shortcuts import render
 from mercadona_app.models import Product,Promotion,Categorie
 from django.views import generic
-from mercadona_app.forms import FiltreCategorieForm 
+
 
 
 # Create your views here.
 def index(request):
-    product_list=Product.objects.all()
-    promotion_list=Promotion.objects.all()
-    category_list=Categorie.objects.all()
     
-
+    promotion_list=Promotion.objects.all()
+   
+    categories=Categorie.objects.all()
+    selected_category=request.GET.get('category',None)
+    if selected_category:
+        product_list=Product.objects.filter(category__name=selected_category)
+    else:
+        product_list=Product.objects.all()
     
     context={
         'product_list':product_list,
         'promotion_list':promotion_list,
-        'category_list':category_list,
+        'categories':categories,
+        'selected_category':selected_category
     }
     
 
