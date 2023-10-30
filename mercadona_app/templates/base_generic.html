@@ -17,8 +17,9 @@
                 {% block sidebar %}
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'index' %}">Accueil</a></li>
-                    <li><a href="">catégorie 1</a></li>
-                    <li><a href="">catégorie 2</a></li>
+                    {% for categorie in category_list %}
+                    <li><a href="">{{categorie.name}} {{categorie.id}}</a></li>
+                    {% endfor %}
 
                 </ul>
                 {% endblock %}
