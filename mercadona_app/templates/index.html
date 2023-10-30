@@ -21,7 +21,7 @@
                 {% for promotion in promotion_list %}
                    
                     {% if product.label == promotion.product.label and promotion.change_status == True %}
-                        <li>Promotion de {{promotion.discount_percentage}} % sur cet article , nouveau prix : <span>{{promotion.calculate_discounted_price}} €</span></li>
+                        <li>Promotion de {{promotion.discount_percentage}} % sur cet article , nouveau prix : <span class="promotion">{{promotion.calculate_discounted_price}} €</span></li>
 
                     {% endif %}
                         
@@ -37,7 +37,21 @@
         {% endfor %}
 
         </ul>
-
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if product_list.has_previous %}
+           
+            <li class="page-item"><a href="?page={{product_list.previous_page_number}}" class="page-link">page précédente</a></li>
+            {% endif %}
+            <li class="page-item active">
+            <span class="current-page page-link"> {{product_list.number}}  </span></li>
+            {% if product_list.has_next %}
+            <li class="page-item">
+            <a href="?page={{product_list.next_page_number}}" class="page-link">page suivante</a></li>
+            
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
        
 

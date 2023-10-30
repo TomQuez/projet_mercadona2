@@ -4,7 +4,7 @@ h1 {
     text-align: center;
 }
 
-span {
+.promotion {
     color: red;
     font-weight: 900;
 }
