@@ -1,9 +1,18 @@
+*{
+    /* border:solid black 2px; */
+}
+
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background:linear-gradient(red,yellow) ;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 h1 {
-    color: red;
+    color: white;
+    font-weight: 900;
     /* border:solid 1px red; */
     text-align: center;
 }
@@ -19,6 +28,15 @@ h1 {
     list-style: none;
 }
 
-select .form-control{
-    width: 50%;
+.white{
+    color: aliceblue;
+    font-weight: 900;
+}
+form{
+    /* border: 2px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
 }

@@ -17,7 +17,7 @@ def index(request):
     else:
         product_list=Product.objects.all()
         
-    paginator=Paginator(product_list,2)
+    paginator=Paginator(product_list,3)
     page_number=request.GET.get('page')
     page_obj=paginator.get_page(page_number)
     
@@ -35,22 +35,3 @@ def index(request):
     return render(request,'index.html',context=context)
 
 
-def product_list(request):
-    
-    categories=Categorie.objects.all()
-    selected_category=request.GET.get('category',None)
-    
-    if selected_category:
-        products=Product.objects.filter(category__name=selected_category)
-    else:
-        products=Product.objects.all()
-
-    paginator=Paginator(products,1)
-    page_number=request.GET.get('page')
-    page_obj=paginator.get_page(page_number)
-    context={
-        'categories':categories,
-        'selected_category':selected_category,
-        'products':page_obj,
-    }
-    return render(request,'categories.html',context=context)

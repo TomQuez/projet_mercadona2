@@ -1,13 +1,13 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <div class="container-fluid">
-        <h1 class="display-4">Accueil</h1>
-        <p>Bienvenue sur le site de catalogue de Mercadona</p>
-        <div>
-        <form action="" method="get" >
-            <label for="category" class="form-label">Veuillez selectionner une catégorie : </label>
-            <select name="category" id="category" class="form-control">
+    <div class="div-1">
+        <h1 class="display-4">Catalogue Mercadona</h1>
+        <p class="text-center white">Bienvenue sur le catalogue de Mercadona</p>
+        <div class="text-center">
+        <form action="" method="get" class="align-item-center">
+            <label for="category" class="form-label white">Veuillez selectionner une catégorie : </label>
+            <select name="category" id="category" class="form-control text-center" style="width: 50%;">
                 <option value="">Toutes les catégories</option>
                 {% for category in categories %}
                 <option value="{{category.name}}" {% if category.name == selected_category %} selected {% endif %}>{{category.name}}</option>
@@ -18,8 +18,8 @@
     </div>
     <div class="row justify-content-center" >
         {% for product in product_list %}
-<div class="card m-auto mt-3" style="width: 18rem;">
-    <img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
+<div class="card m-auto mt-2" style="width: 18rem;">
+    <img class="card-img-top mt-3" src="{{product.image.url}}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{product.label}}</h5>
       <p class="card-text">{{product.description}}</p>
