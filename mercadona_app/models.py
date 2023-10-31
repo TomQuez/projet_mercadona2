@@ -47,7 +47,7 @@ class Product(models.Model):
     
     
 class Promotion(models.Model):
-    id=id=models.UUIDField(primary_key=True,default=uuid.uuid4,help_text="Unique ID for this promotion")
+    id=models.UUIDField(primary_key=True,default=uuid.uuid4,help_text="Unique ID for this promotion")
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     status=models.BooleanField(default=False)
     start_date=models.DateField()
