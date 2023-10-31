@@ -1,6 +1,4 @@
-*{
-    /* border:solid black 2px; */
-}
+
 
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -39,4 +37,10 @@ form{
     justify-content: space-between;
     align-items: center;
 
+}
+.btn-primary{
+    background: linear-gradient(orange,yellow);
+    border: 1px solid white;
+    color: red;
+    font-weight: 900;
 }
