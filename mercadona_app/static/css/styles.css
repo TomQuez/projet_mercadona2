@@ -41,6 +41,6 @@ form{
 .btn-primary{
     background: linear-gradient(orange,yellow);
     border: 1px solid white;
-    color: red;
+    color:darkred;
     font-weight: 900;
 }
