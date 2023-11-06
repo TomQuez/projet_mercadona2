@@ -44,3 +44,8 @@ form{
     color:darkred;
     font-weight: 900;
 }
+
+img{
+    width: 300;
+    height: auto;
+}

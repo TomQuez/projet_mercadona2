@@ -7,7 +7,7 @@
         <div class="text-center">
         <form action="" method="get" >
             <label for="category" class="form-label white">Veuillez selectionner une catégorie : </label>
-            <select name="category" id="category" class="form-control text-center" style="width: 50%;">
+            <select name="category" id="category" class="form-control text-center" style="width: 70%;">
                 <option value="">Toutes les catégories</option>
                 {% for category in categories %}
                 <option value="{{category.name}}" {% if category.name == selected_category %} selected {% endif %}>{{category.name}}</option>
