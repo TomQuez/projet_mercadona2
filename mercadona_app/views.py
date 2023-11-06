@@ -59,11 +59,13 @@ def get_catalog_data(request):
                     'start_date':promotion.start_date,
                     'end_date':promotion.end_date,
                     'discount_percentage':promotion.discount_percentage,
+                    'status':promotion.status
                     
                 }
                 if promotion.start_date<=datetime.date.today()<=promotion.end_date:
                     discounted_price=product.price-(product.price*promotion.discount_percentage/100)
                     product_data['price']=str(discounted_price)
+                    product_data['promotion']['status']=True
         catalogue_data.append(product_data)
         
   
