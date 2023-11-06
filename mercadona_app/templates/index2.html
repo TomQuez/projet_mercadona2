@@ -1,8 +1,21 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1 class="display-4">Catalogue Mercadona</h1>
-<p class="text-center white">Bienvenue sur le catalogue de Mercadona</p>
+<div class="div-1">
+    <h1 class="display-4">Catalogue Mercadona</h1>
+    <p class="text-center white">Bienvenue sur le catalogue de Mercadona</p>
+    <div class="text-center">
+    <form action="" method="get" >
+        <label for="category" class="form-label white">Veuillez selectionner une catégorie : </label>
+        <select name="category" id="category" class="form-control text-center mb-4" style="width: 70%;">
+            <option value="">Toutes les catégories</option>
+            
+            
+            
+        </select>
+        
+    </form>
+</div>
 <div id="product-list">
     <!-- La liste des produits sera affichée ici -->
 </div>
