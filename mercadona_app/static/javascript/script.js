@@ -47,12 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
     products.forEach((product) => {
       const productDiv = document.createElement("div");
 
-      productDiv.classList.add("row");
+      // productDiv.classList.add("row");
 
       if (product.promotion && product.promotion.status == true) {
         productDiv.innerHTML = `
-              <div class="card m-auto mt-2" style="width:18rem;">
-              <img class="card-img-top mt-3" src="${product.image}" alt="Card image cap">
+              <div class="card m-auto my-2 " style="width:18rem;">
+              <img class="card-img-top mt-3 p-2" src="${product.image}" alt="Card image cap" >
               <div class="card-body">
               <h5 class="card-title">              ${product.label}</h5>
               <p class="card-text">${product.description}</p>
