@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
           option.textContent = category.name;
           categoryDropdown.appendChild(option);
         });
-        loadPage(currentPage); // Chargez les produits initialement.
+        displayProducts(allProducts); // Chargez les produits initialement.
       })
       .catch((error) => {
         console.error("Une erreur est survenue : ", error);
@@ -94,21 +94,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function loadPage(page) {
-    fetch(`get_catalog_data/?page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        displayProducts(data.products);
-        currentPage = page;
-        totalPages = data.total_pages;
-      })
-      .catch((error) => {
-        console.error(
-          "Une erreur est survenue pendant la récupération des données : ",
-          error
-        );
-      });
-  }
+  // function loadPage(page) {
+  //   fetch(`get_catalog_data/?page=${page}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       displayProducts(data.products);
+  //       currentPage = page;
+  //       totalPages = data.total_pages;
+  //     })
+  //     .catch((error) => {
+  //       console.error(
+  //         "Une erreur est survenue pendant la récupération des données : ",
+  //         error
+  //       );
+  //     });
+  // }
 
   document.querySelector("#nextPage").addEventListener("click", () => {
     if (currentPage < totalPages) {

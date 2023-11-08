@@ -62,7 +62,7 @@ def get_catalog_data(request):
     # paginated_products=products[start_index:end_index]
     
     category_id=request.GET.get('category')
-    if category_id is not None:
+    if category_id is not None and category_id!='':
         products=Product.objects.filter(category=category_id)
     
     # total_pages=ceil(len(products)/items_per_page)   
