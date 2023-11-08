@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Remplissez le menu déroulant des catégories.
         categories.forEach((category) => {
           const option = document.createElement("option");
-          option.value = category.name;
+          option.value = category.id;
           option.textContent = category.name;
           categoryDropdown.appendChild(option);
         });
