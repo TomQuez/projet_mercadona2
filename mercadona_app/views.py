@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from mercadona_app.models import Product,Promotion,Categorie
 from django.views import generic
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.core import serializers
 import datetime
+from math import ceil
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -42,7 +44,38 @@ def index(request):
 def get_catalog_data(request):
     products=Product.objects.all()
     promotions=Promotion.objects.all()
+    categories=Categorie.objects.all()
     catalogue_data=[]
+    # items_per_page=3
+    
+    
+   
+    # page_number=request.GET.get('page')
+    # if page_number is None:
+    #     page_number=1
+    # else:
+    #     page_number=int(page_number)
+    
+    # start_index=(page_number-1)*items_per_page
+    # end_index=start_index+items_per_page
+   
+    # paginated_products=products[start_index:end_index]
+    
+    category_id=request.GET.get('category')
+    if category_id is not None:
+        products=Product.objects.filter(category=category_id)
+    
+    # total_pages=ceil(len(products)/items_per_page)   
+    
+    
+    
+    # try:
+    #     products=paginator.page(page)
+    # except PageNotAnInteger:
+    #     products=paginator.page(1)
+    # except EmptyPage:
+    #     products=paginator.page(paginator.num_pages)
+        
     for product in products:
         product_data={
             'id':str(product.id),
@@ -68,8 +101,10 @@ def get_catalog_data(request):
                     product_data['promotion']['status']=True
         catalogue_data.append(product_data)
         
-  
-    return JsonResponse({'products':catalogue_data, }) 
+    context={
+        'products':catalogue_data,     
+        'categories':list(categories.values()),}
+    return JsonResponse(context) 
 
 def index2(request):
     return render(request,'index2.html')
