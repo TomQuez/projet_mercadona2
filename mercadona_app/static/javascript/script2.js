@@ -72,6 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const productDiv = document.createElement("div");
 
       if (product.promotion && product.promotion.status == true) {
+        const formatedEndDate = formatPromotionEndDate(
+          product.promotion.end_date
+        );
         productDiv.innerHTML = `
                 <div class="card m-auto my-2 " style="width:18rem;">
                 <img class="card-img-top mt-3 p-2" src="${product.image}" alt="Card image cap" >
@@ -81,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item">Catégorie : ${product.category}</li>
-                <li class="list-group-item">Promotion de ${product.promotion.discount_percentage} % valable jusqu'au ${product.promotion.end_date}</li>
+                <li class="list-group-item">Promotion de ${product.promotion.discount_percentage} % valable jusqu'au ${formatedEndDate}</li>
                 <li class="list-group-item">Prix :<span class="promotion"> ${product.price}</span></li>
                 </ul>
                 </div>
@@ -126,6 +129,13 @@ document.addEventListener("DOMContentLoaded", function () {
         previousPage.style.display = "list-item";
       }
     });
+  }
+  function formatPromotionEndDate(endDate) {
+    const dateObject = new Date(endDate);
+    const day = dateObject.getDate();
+    const month = dateObject.getMonth() + 1;
+    const year = dateObject.getFullYear();
+    return `${day}/${month}/${year}`;
   }
   function loadPage(pageNumber) {
     displayProducts(allProducts);
