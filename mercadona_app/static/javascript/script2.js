@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let allProducts = [];
   const itemsPerPage = 3;
   let currentPage = 1;
+  let nextPage = document.querySelector("#nextPage");
+  let previousPage = document.querySelector("#previousPage");
 
   // Assurez-vous de définir totalPages.
 
@@ -104,17 +106,36 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       productList.appendChild(productDiv);
+
+      let pageCourante = document.getElementById("currentPage");
+      pageCourante.textContent = currentPage;
+      let lastPage = document.getElementById("lastPage");
+      lastPage.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          currentPage = totalPages;
+          loadPage(currentPage);
+        }
+      });
+      if (totalPages == 1) {
+        nextPage.style.display = "none";
+        lastPage.style.display = "none";
+        previousPage.style.display = "none";
+      } else {
+        nextPage.style.display = "list-item";
+        lastPage.style.display = "list-item";
+        previousPage.style.display = "list-item";
+      }
     });
   }
   function loadPage(pageNumber) {
     displayProducts(allProducts);
   }
   function getTotalPagesForCategory(categoryId, products) {
-    console.log("categoryID :", categoryId);
+    // console.log("categoryID :", categoryId);
     const categoryProducts = products.filter(
       (product) => product.categoryId == categoryId
     );
-    console.log("filtered Products :", categoryProducts);
+    // console.log("filtered Products :", categoryProducts);
 
     let limit = Math.ceil(categoryProducts.length / itemsPerPage);
     if (categoryProducts.length != 0) {
@@ -122,21 +143,22 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       totalPages = Math.ceil(products.length / itemsPerPage);
     }
-    console.log("totalPages", totalPages);
-    console.log("categoryProducts:", categoryProducts);
-    console.log("products ", products);
-    console.log("allProducts ", allProducts);
+    // console.log("totalPages", totalPages);
+    // console.log("categoryProducts:", categoryProducts);
+    // console.log("products ", products);
+    // console.log("allProducts ", allProducts);
 
     return totalPages;
   }
 
-  document.querySelector("#nextPage").addEventListener("click", () => {
+  nextPage.addEventListener("click", () => {
     if (currentPage < totalPages) {
       currentPage++;
       loadPage(currentPage);
     }
   });
-  document.querySelector("#previousPage").addEventListener("click", () => {
+
+  previousPage.addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
       loadPage(currentPage);
