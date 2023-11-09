@@ -46,36 +46,13 @@ def get_catalog_data(request):
     promotions=Promotion.objects.all()
     categories=Categorie.objects.all()
     catalogue_data=[]
-    # items_per_page=3
-    
-    
-   
-    # page_number=request.GET.get('page')
-    # if page_number is None:
-    #     page_number=1
-    # else:
-    #     page_number=int(page_number)
-    
-    # start_index=(page_number-1)*items_per_page
-    # end_index=start_index+items_per_page
-   
-    # paginated_products=products[start_index:end_index]
+  
     
     category_id=request.GET.get('category')
     if category_id is not None and category_id!='':
         products=Product.objects.filter(category=category_id)
     
-    # total_pages=ceil(len(products)/items_per_page)   
     
-    
-    
-    # try:
-    #     products=paginator.page(page)
-    # except PageNotAnInteger:
-    #     products=paginator.page(1)
-    # except EmptyPage:
-    #     products=paginator.page(paginator.num_pages)
-        
     for product in products:
         product_data={
             'id':str(product.id),
@@ -84,6 +61,7 @@ def get_catalog_data(request):
             'description':product.description,
             'image':product.image.url,
             'category':product.category.name if product.category else '',
+            'categoryId':product.category.id if product.category else '',
             'promotion':None,
         }
         for promotion in promotions:

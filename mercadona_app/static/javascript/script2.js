@@ -2,8 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const productList = document.getElementById("product-list");
   const categoryDropdown = document.getElementById("category");
   let allProducts = [];
+  const itemsPerPage = 3;
   let currentPage = 1;
-  let totalPages = 1; // Assurez-vous de définir totalPages.
+
+  // Assurez-vous de définir totalPages.
 
   // Fonction pour charger les produits et les catégories en une seule requête.
   function loadData() {
@@ -12,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const categories = data.categories;
         allProducts = data.products;
-        totalPages = data.total_pages;
+        totalPages = Math.ceil(allProducts.length / itemsPerPage);
+
         // Remplissez le menu déroulant des catégories.
         categories.forEach((category) => {
           const option = document.createElement("option");
@@ -30,11 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // Gérez le changement de catégorie.
   categoryDropdown.addEventListener("change", function () {
     const selectedCategory = categoryDropdown.value;
+
+    const totalCategoryPages = getTotalPagesForCategory(
+      selectedCategory,
+      allProducts
+    );
+    if (currentPage > totalCategoryPages) {
+      currentPage = totalCategoryPages;
+    }
+
     fetch(`get_catalog_data/?category=${selectedCategory}`)
       .then((response) => response.json())
       .then((data) => {
-        allProducts = data.products;
-        displayProducts(allProducts);
+        let productsByCat;
+        productsByCat = data.products;
+        displayProducts(productsByCat);
       })
       .catch((error) => {
         console.error(
@@ -50,11 +63,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Fonction pour afficher les produits dans le catalogue.
   function displayProducts(products) {
     productList.innerHTML = ""; // Effacez le contenu précédent.
-
-    products.forEach((product) => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const displayedProducts = products.slice(startIndex, endIndex);
+    displayedProducts.forEach((product) => {
       const productDiv = document.createElement("div");
-
-      // productDiv.classList add("row");
 
       if (product.promotion && product.promotion.status == true) {
         productDiv.innerHTML = `
@@ -93,37 +106,40 @@ document.addEventListener("DOMContentLoaded", function () {
       productList.appendChild(productDiv);
     });
   }
+  function loadPage(pageNumber) {
+    displayProducts(allProducts);
+  }
+  function getTotalPagesForCategory(categoryId, products) {
+    console.log("categoryID :", categoryId);
+    const categoryProducts = products.filter(
+      (product) => product.categoryId == categoryId
+    );
+    console.log("filtered Products :", categoryProducts);
 
-  // function loadPage(page) {
-  //   fetch(`get_catalog_data/?page=${page}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       displayProducts(data.products);
-  //       currentPage = page;
-  //       totalPages = data.total_pages;
-  //     })
-  //     .catch((error) => {
-  //       console.error(
-  //         "Une erreur est survenue pendant la récupération des données : ",
-  //         error
-  //       );
-  //     });
-  // }
+    let limit = Math.ceil(categoryProducts.length / itemsPerPage);
+    if (categoryProducts.length != 0) {
+      totalPages = limit;
+    } else {
+      totalPages = Math.ceil(products.length / itemsPerPage);
+    }
+    console.log("totalPages", totalPages);
+    console.log("categoryProducts:", categoryProducts);
+    console.log("products ", products);
+    console.log("allProducts ", allProducts);
+
+    return totalPages;
+  }
 
   document.querySelector("#nextPage").addEventListener("click", () => {
     if (currentPage < totalPages) {
-      loadPage(currentPage + 1);
+      currentPage++;
+      loadPage(currentPage);
     }
   });
   document.querySelector("#previousPage").addEventListener("click", () => {
     if (currentPage > 1) {
-      loadPage(currentPage - 1);
+      currentPage--;
+      loadPage(currentPage);
     }
   });
-  // function filterProductsByCategory(products, category) {
-  //   if (!category) {
-  //     return products;
-  //   }
-  //   return products.filter((product) => product.category === category);
-  // }
 });
