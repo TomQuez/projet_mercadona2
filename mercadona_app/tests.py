@@ -137,3 +137,12 @@ class CatalogViewsTests(TestCase):
         url = reverse('index2')
         response=self.client.get(url)
         self.assertEqual(response.status_code,200)
+        
+class TemplateTests(TestCase):
+    def test_index2_template(self):
+        url = reverse('index2')
+        response=self.client.get(url)
+        self.assertEqual(response.status_code,200)
+        
+        self.assertContains(response,'Catalogue Mercadona')
+        self.assertContains(response,'Bienvenue sur le catalogue de Mercadona')
