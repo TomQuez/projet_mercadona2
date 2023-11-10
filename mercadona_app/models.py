@@ -4,6 +4,9 @@ import uuid
 import datetime
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from auditlog.registry import auditlog
+from auditlog.models import AuditlogHistoryField
+
 
 def validate_inferior_100(value):
     if value>=100 or value<=0 :
@@ -16,6 +19,7 @@ def validate_image_extension(value):
 class Categorie (models.Model):
     """This object represent a category for a product."""
     name=models.CharField(max_length=100,help_text="Enter a name for the category(e.g. sport)")
+    # history=AuditlogHistoryField()
     
     def __str__(self):
         """this function return a string to identify the instance of the object's class """
@@ -29,6 +33,8 @@ class Product(models.Model):
     description=models.TextField(max_length=1000,help_text="Enter a brief description of the product",null=False)
     image=models.ImageField(upload_to="images/",validators=[validate_image_extension])
     category=models.ForeignKey(Categorie,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
+    # history=AuditlogHistoryField()
+ 
     
     class Meta :
         ordering=['label']
@@ -54,6 +60,7 @@ class Promotion(models.Model):
     start_date=models.DateField()
     end_date=models.DateField()
     discount_percentage=models.PositiveIntegerField(validators=[validate_inferior_100],help_text="Enter a percentage for the promotion. it must be positive and under 100")
+    # history=AuditlogHistoryField()
     
     
     
@@ -77,4 +84,4 @@ class Promotion(models.Model):
         if datetime.date.today()>=self.start_date and datetime.date.today()<=self.end_date: 
             self.product.price= self.product.price-(self.product.price*self.discount_percentage/100)
             return self.product.price
-        
+# auditlog.register(Product, Promotion, Categorie)
