@@ -8,6 +8,9 @@ from django.utils.translation import gettext_lazy as _
 def validate_inferior_100(value):
     if value>=100 or value<=0 :
         raise ValidationError(_("%(value)s is not inferior to 100"),params={"value":value})
+def validate_image_extension(value):
+    if not value.name.endswith(('.jpg','.jpeg','.png','.gif')):
+        raise ValidationError("Seuls les fichiers image .jpg, .jpeg, ,.gif et .png sont autorisés")
 
 # Create your models here.
 class Categorie (models.Model):
@@ -24,7 +27,7 @@ class Product(models.Model):
     label=models.CharField(max_length=200,help_text="Enter a label for the product",null=False)
     price=models.DecimalField(max_digits=10,decimal_places=2, help_text="Enter a price for the product",null=False)
     description=models.TextField(max_length=1000,help_text="Enter a brief description of the product",null=False)
-    image=models.ImageField(upload_to="images/")
+    image=models.ImageField(upload_to="images/",validators=[validate_image_extension])
     category=models.ForeignKey(Categorie,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
     
     class Meta :
