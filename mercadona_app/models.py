@@ -2,13 +2,11 @@ from django.db import models
 from django.urls import reverse
 import uuid
 import datetime
-import math
-from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 def validate_inferior_100(value):
-    if value>=100:
+    if value>=100 or value<=0 :
         raise ValidationError(_("%(value)s is not inferior to 100"),params={"value":value})
 
 # Create your models here.
@@ -36,9 +34,9 @@ class Product(models.Model):
         """Function used to manipulate the objects Product in the database"""
         return self.label
     
-    def get_absolute_url(self):
-        """This function is used to display the content of an object Product"""
-        return reverse('product-detail',args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     """This function is used to display the content of an object Product"""
+    #     return reverse('product-detail',args=[str(self.id)])
     
     def get_price(self):
         """return the price of the product"""
@@ -62,11 +60,17 @@ class Promotion(models.Model):
         return f'{self.product} : promotion de {result_discount} %'
     
     def change_status(self):
-        if self.start_date <= datetime.date.today() and self.end_date>=datetime.date.today():
-            self.status=True
+        if self.start_date is not None and self.end_date is not None:
+        
+            if self.start_date <= datetime.date.today() and self.end_date>=datetime.date.today():
+                self.status=True
+                return self.status
+        else :
+            self.status=False
             return self.status
     
     def calculate_discounted_price(self):
+        
         if datetime.date.today()>=self.start_date and datetime.date.today()<=self.end_date: 
             self.product.price= self.product.price-(self.product.price*self.discount_percentage/100)
             return self.product.price

@@ -1,12 +1,10 @@
 from django.shortcuts import render
-from mercadona_app.models import Product,Promotion,Categorie
-from django.views import generic
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .models import Product,Promotion,Categorie
+from django.core.paginator import Paginator 
 from django.http import JsonResponse
-from django.core import serializers
 import datetime
 from math import ceil
-from django.views.decorators.csrf import csrf_exempt
+
 
 
 
