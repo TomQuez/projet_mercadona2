@@ -21,9 +21,9 @@ class Categorie (models.Model):
 class Product(models.Model):
     """This object represent a product"""
     id=models.UUIDField(primary_key=True,default=uuid.uuid4,help_text="Unique ID for this particular product")
-    label=models.CharField(max_length=200,help_text="Enter a label for the product")
-    price=models.DecimalField(max_digits=10,decimal_places=2, help_text="Enter a price for the product")
-    description=models.TextField(max_length=1000,help_text="Enter a brief description of the product")
+    label=models.CharField(max_length=200,help_text="Enter a label for the product",null=False)
+    price=models.DecimalField(max_digits=10,decimal_places=2, help_text="Enter a price for the product",null=False)
+    description=models.TextField(max_length=1000,help_text="Enter a brief description of the product",null=False)
     image=models.ImageField(upload_to="images/")
     category=models.ForeignKey(Categorie,on_delete=models.SET_NULL,null=True, help_text="select a category for the product")
     

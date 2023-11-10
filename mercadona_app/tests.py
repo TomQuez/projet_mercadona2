@@ -1,7 +1,12 @@
 from django.test import TestCase
 import datetime
+from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from .models import Product,Promotion,Categorie,validate_inferior_100
+from django.urls import reverse
+from django.core.files.base import ContentFile
+from django.core.files.images import ImageFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 # Create your tests here.
 
 class ObjectCreationTests(TestCase):
@@ -78,3 +83,57 @@ class ValidationTests(TestCase):
         value=-10
         with self.assertRaises(ValidationError):
             validate_inferior_100(value)
+            
+class ProductValidationTests(TestCase):
+    def test_create_product_with_missing_label(self):
+        #try to create a product without a label
+        product = Product(price=50.0,description="Description", category=None)
+       
+        with self.assertRaises(ValidationError):
+           
+            product.full_clean()
+    def test_create_product_with_missing_price(self):
+        #try to create a product without a price
+        product = Product(label="example without price",description="Description", category=None)
+       
+        with self.assertRaises(ValidationError):
+           
+            product.full_clean()
+    def test_create_product_with_missing_description(self):
+        #try to create a product without a description
+        product = Product(label="example without description",price=50.0, category=None)
+       
+        with self.assertRaises(ValidationError):
+           
+            product.full_clean()
+            
+    def test_create_product_with_missing_category(self):
+        #try to create a product without a category
+        product = Product(label="example without category",price=50.0,description="description")
+       
+        with self.assertRaises(ValidationError):
+           
+            product.full_clean()
+            
+class CatalogViewsTests(TestCase):
+    #create data for the tests
+    def setUp(self):
+        self.product=Product.objects.create(label="Product1",price=50.0,description="description")
+        self.categorie=Categorie.objects.create(name="categorie1")
+        self.promotion=Promotion.objects.create(product=self.product,start_date="2023-01-01",end_date="2023-01-31",discount_percentage=10)
+        image_content=ContentFile(b'')
+        image=SimpleUploadedFile("test_image.jpg",image_content.read(),content_type="image/jpeg")
+        self.product.image=image
+        self.product.save()
+        
+    def test_get_catalog_data(self):
+        #test view get_catalog_data
+        url=reverse('get_catalog_data')
+        response=self.client.get(url)
+        self.assertEqual(response.status_code,200)
+        
+    def test_index2(self):
+        #test view index2
+        url = reverse('index2')
+        response=self.client.get(url)
+        self.assertEqual(response.status_code,200)
